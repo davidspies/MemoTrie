@@ -1,25 +1,27 @@
-{-# LANGUAGE DeriveGeneric, TypeOperators, TypeFamilies #-}
+{-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
+{-# LANGUAGE DerivingVia #-}
+{-# LANGUAGE TypeFamilies #-}
+{-# LANGUAGE TypeOperators #-}
+{-# LANGUAGE UndecidableInstances #-}
+
 import Data.MemoTrie
-import GHC.Generics (Generic) 
+import GHC.Generics (Generic)
 
-data Color = RGB Int Int Int
-           | NamedColor String 
-  deriving (Generic) 
-
-instance HasTrie Color where
-  newtype (Color :->: b) = ColorTrie { unColorTrie :: Reg Color :->: b } 
-  trie      = trieGeneric ColorTrie 
-  untrie    = untrieGeneric unColorTrie
-  enumerate = enumerateGeneric unColorTrie
+data Color
+  = RGB Int Int Int
+  | NamedColor String
+  deriving (Generic)
+  deriving (HasTrie) via MemoTrieGenerics Color
 
 runColor (RGB r g b) = r + g + b
-runColor (NamedColor s) = length [1..10e7] 
+runColor (NamedColor s) = length [1 .. 10e7]
 
-runColorMemoized = memo runColor 
+runColorMemoized = memo runColor
 
 main =
-  do putStrLn "first call (should take a few seconds): " 
-     print$ runColorMemoized (NamedColor "")
-     putStrLn "cached call (should be instantaneous): " 
-     print$ runColorMemoized (NamedColor "") 
-
+  do
+    putStrLn "first call (should take a few seconds): "
+    print $ runColorMemoized (NamedColor "")
+    putStrLn "cached call (should be instantaneous): "
+    print $ runColorMemoized (NamedColor "")

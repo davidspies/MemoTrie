@@ -35,8 +35,6 @@ library
       src
   build-depends:
       base >=4.7 && <5
-    , newtype-generics
-    , void
   default-language: Haskell2010
 
 test-suite MemoTrie-example
@@ -50,6 +48,4 @@ test-suite MemoTrie-example
   build-depends:
       MemoTrie
     , base >=4.7 && <5
-    , newtype-generics
-    , void
   default-language: Haskell2010
