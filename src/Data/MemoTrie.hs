@@ -36,7 +36,7 @@
 -- You can automatically derive generic instances. for example:
 --
 -- @
--- {-# LANGUAGE <https://ocharles.org.uk/blog/posts/2014-12-16-derive-generic.html DeriveGeneric>, TypeOperators, TypeFamilies #-}
+-- {-# LANGUAGE <https://ocharles.org.uk/blog/posts/2014-12-16-derive-generic.html DeriveGeneric>, TypeOperators, TypeFamilies, UndecidableInstances #-}
 -- import Data.MemoTrie
 -- import GHC.Generics (Generic)
 --
