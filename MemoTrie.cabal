@@ -1,54 +1,55 @@
-Name:                MemoTrie
-Version:             0.6.10
-Cabal-Version:       >= 1.10
-Synopsis:            Trie-based memo functions
-Category:            Data
-Description:
-  MemoTrie provides a basis for memoized functions over some domains,
-  using tries.  It's based on ideas from Ralf Hinze and code from
-  Spencer Janssen. Generic support thanks to Sam Boosalis.
-  .
-  Project wiki page: <http://haskell.org/haskellwiki/MemoTrie>
-  .
-  &#199; 2008-2019 by Conal Elliott; BSD3 license.
-Homepage:            https://github.com/conal/MemoTrie
-Author:              Conal Elliott 
-Maintainer:          conal@conal.net
-Copyright:           (c) 2008-2019 by Conal Elliott
-License:             BSD3
-License-File:        COPYING
-Stability:           experimental
-build-type:          Simple
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.34.4.
+--
+-- see: https://github.com/sol/hpack
+
+name:           MemoTrie
+version:        0.6.10
+synopsis:       Trie-based memo functions
+description:    MemoTrie provides a basis for memoized functions over some domains, using tries.  It's based on ideas from Ralf Hinze and code from Spencer Janssen. Generic support thanks to Sam Boosalis. . Project wiki page: <http://haskell.org/haskellwiki/MemoTrie> . &#199; 2008-2019 by Conal Elliott; BSD3 license.
+category:       Data
+stability:      experimental
+homepage:       https://github.com/conal/MemoTrie
+bug-reports:    https://github.com/davidspies/MemoTrie/issues
+author:         Conal Elliot
+maintainer:     conal@conal.net
+copyright:      (c) 2008-2019 by Conal Elliott
+license:        BSD3
+license-file:   COPYING
+build-type:     Simple
+extra-source-files:
+    README.md
+    changes.tw
 
 source-repository head
-  type:     git
-  location: git://github.com/conal/MemoTrie.git
+  type: git
+  location: https://github.com/davidspies/MemoTrie
 
-Flag examples
-  Description: "examples"
-  Default:     False
-  Manual:      True
-
-Library
-  hs-Source-Dirs:      src
-
-  if impl(ghc >= 7.10.0)
-     Build-Depends: base >=4.8.0.0 && <5, newtype-generics >= 0.5.3
-  else
-     Build-Depends: base <4.8.0.0, void, newtype-generics >= 0.5.3
-
-  Exposed-Modules:     
-                     Data.MemoTrie
-  Other-Modules:     
-
+library
+  exposed-modules:
+      Data.MemoTrie
+  other-modules:
+      Paths_MemoTrie
+  hs-source-dirs:
+      src
+  build-depends:
+      base >=4.7 && <5
+    , newtype-generics
+    , void
   default-language: Haskell2010
 
-executable generic 
-  if !flag(examples)
-    buildable:         False
-  main-is:             Generic.hs
-  ghc-options:         -Wall
-  hs-source-dirs:      examples
-  default-language:    Haskell2010
-  build-depends:       base, MemoTrie
-
+test-suite MemoTrie-example
+  type: exitcode-stdio-1.0
+  main-is: Generic.hs
+  other-modules:
+      Paths_MemoTrie
+  hs-source-dirs:
+      examples
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      MemoTrie
+    , base >=4.7 && <5
+    , newtype-generics
+    , void
+  default-language: Haskell2010
