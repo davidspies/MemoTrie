@@ -43,7 +43,7 @@
 -- data Color = RGB Int Int Int
 --            | NamedColor String
 --  deriving stock ('Generic')
---  deriving (HasTrie) via MemoTrieGenerics Color
+--  deriving (HasTrie) via GenericMemoTrie Color
 -- @
 --
 -- see @examples/Generic.hs@, which can be run with:
@@ -53,7 +53,7 @@
 -- @
 module Data.MemoTrie
   ( HasTrie (..),
-    MemoTrieGenerics (..),
+    GenericMemoTrie (..),
     domain,
     trie2,
     trie3,
@@ -491,14 +491,14 @@ instance (HasTrie (f x)) => HasTrie (M1 i t f x) where
 -- "unlifted" generic representation. (i.e. is a unary type constructor).
 type Reg a = Rep a ()
 
-newtype MemoTrieGenerics a = MemoTrieGenerics {getMemoTrieGenerics :: a}
+newtype GenericMemoTrie a = GenericMemoTrie {getGenericMemoTrie :: a}
   deriving newtype (Generic)
 
-instance (Generic a, HasTrie (Reg a)) => HasTrie (MemoTrieGenerics a) where
-  type MemoTrieGenerics a /->/ b = Reg a /->/ b
-  trie f = trie (f . MemoTrieGenerics . (to :: Reg a -> a))
-  untrie t = untrie t . (from :: a -> Reg a) . getMemoTrieGenerics
-  enumerate t = enum' (MemoTrieGenerics . (to :: Reg a -> a)) t
+instance (Generic a, HasTrie (Reg a)) => HasTrie (GenericMemoTrie a) where
+  type GenericMemoTrie a /->/ b = Reg a /->/ b
+  trie f = trie (f . GenericMemoTrie . (to :: Reg a -> a))
+  untrie t = untrie t . (from :: a -> Reg a) . getGenericMemoTrie
+  enumerate t = enum' (GenericMemoTrie . (to :: Reg a -> a)) t
 
 dropProduct :: (f :*: g) a -> (f a, g a)
 dropProduct (a :*: b) = (a, b)

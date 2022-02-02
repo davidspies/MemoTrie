@@ -11,7 +11,7 @@ data Color
   = RGB Int Int Int
   | NamedColor String
   deriving stock (Generic)
-  deriving (HasTrie) via MemoTrieGenerics Color
+  deriving (HasTrie) via GenericMemoTrie Color
 
 runColor (RGB r g b) = r + g + b
 runColor (NamedColor s) = length [1 .. 10e7]
