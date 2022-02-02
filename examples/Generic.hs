@@ -1,5 +1,4 @@
 {-# LANGUAGE DeriveGeneric #-}
-{-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE DerivingVia #-}
 {-# LANGUAGE TypeFamilies #-}
 {-# LANGUAGE TypeOperators #-}
@@ -11,7 +10,7 @@ import GHC.Generics (Generic)
 data Color
   = RGB Int Int Int
   | NamedColor String
-  deriving (Generic)
+  deriving stock (Generic)
   deriving (HasTrie) via MemoTrieGenerics Color
 
 runColor (RGB r g b) = r + g + b
